@@ -29,6 +29,21 @@ fetch(
 let HasTags = [];
 let Content = null;
 
+function randomPost(value) {
+    fetch(`http://localhost:1337/api/random?idCate=${value}`)
+        .then((res) => res.json())
+        .then((res) => {
+            if (res && res?.data) {
+                Content = res.data;
+            } else {
+                Content = null;
+                alert("Danh mục này cate không có bài viết");
+            }
+        });
+}
+
+let idCate = null;
+
 SelectCate.addEventListener("change", (e) => {
     console.log(e.target.value);
 
@@ -37,6 +52,7 @@ SelectCate.addEventListener("change", (e) => {
         return;
     }
 
+    randomPost(e.target.value);
     fetch(
         `http://localhost:1337/api/hastags?filters[categories]=${e.target.value}`
     )
@@ -49,17 +65,6 @@ SelectCate.addEventListener("change", (e) => {
                 alert("Danh mục này cate không có hastag");
             }
             Count.innerHTML = `Số HasTag: ${HasTags.length}`;
-        });
-
-    fetch(`http://localhost:1337/api/random?idCate=${e.target.value}`)
-        .then((res) => res.json())
-        .then((res) => {
-            if (res && res?.data) {
-                Content = res.data;
-            } else {
-                Content = null;
-                alert("Danh mục này cate không có bài viết");
-            }
         });
 });
 Count.innerHTML = `Số HasTag: ${HasTags.length}`;
@@ -83,6 +88,8 @@ ClickBtnRandom.addEventListener("click", function () {
         alert("Bạn vui lòng nhập số random nhỏ hơn hoặc bằng với số hastag");
         return;
     }
+
+    randomPost(SelectCate.value);
 
     let hasgtagRandom = [];
     function shuffleArray(array) {
