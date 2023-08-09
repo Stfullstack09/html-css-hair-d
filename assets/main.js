@@ -4,6 +4,8 @@ const InputRandomTag = document.querySelector("#random-tag");
 const ClickBtnRandom = document.querySelector("#click-random");
 const TextAreaRender = document.querySelector("#text-render-wp");
 const CopyToClipboard = document.querySelector("#copy-to-bonhodem");
+const CountHastag = document.querySelector("#cout-hastag-wpp");
+const CountWord = document.querySelector("#cout-word");
 
 fetch(
     "http://localhost:1337/api/categories?pagination[page]=1&pagination[pageSize]=10000000000000000000000000"
@@ -83,24 +85,37 @@ ClickBtnRandom.addEventListener("click", function () {
     }
 
     let hasgtagRandom = [];
+    function shuffleArray(array) {
+        let ArrClone = [...array];
+
+        for (let i = ArrClone.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [ArrClone[i], ArrClone[j]] = [ArrClone[j], ArrClone[i]];
+        }
+
+        return ArrClone;
+    }
+
+    let dataRandomHastag = shuffleArray(HasTags);
 
     for (let i = 0; i < Number(InputRandomTag.value); i++) {
-        hasgtagRandom.push(HasTags[Math.floor(Math.random() * HasTags.length)]);
+        hasgtagRandom.push(dataRandomHastag[i]);
     }
 
     let Text = "";
-
     if (hasgtagRandom && hasgtagRandom.length > 0) {
         let hungTag = hasgtagRandom.map((item) => item?.attributes?.tag);
-
         Text += hungTag.join(" | ");
     }
 
+    console.log(Content?.body?.split(" ").length);
+
+    CountHastag.innerHTML = `Số tag: ${hasgtagRandom.length}`;
+    CountWord.innerHTML = `Số từ: ${Content?.body?.split(" ").length}`;
+
     TextAreaRender.innerHTML = `
-
-    hasgtag: ${Text}
-
-    content: ${Content?.body}
+        ${Content?.body}
+        ${Text}
     `;
 });
 
