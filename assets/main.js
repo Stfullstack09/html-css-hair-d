@@ -105,7 +105,7 @@ ClickBtnRandom.addEventListener("click", function () {
     let Text = "";
     if (hasgtagRandom && hasgtagRandom.length > 0) {
         let hungTag = hasgtagRandom.map((item) => item?.attributes?.tag);
-        Text += hungTag.join(" | ");
+        Text += hungTag.join("  ");
     }
 
     console.log(Content?.body?.split(" ").length);
