@@ -1,3 +1,9 @@
+const IsLogin = localStorage.getItem("isLogin");
+
+if (!IsLogin) {
+    window.location.href = "/login.html";
+}
+
 const SelectCate = document.querySelector("#CateGories");
 const Count = document.querySelector("#count-hastag");
 const InputRandomTag = document.querySelector("#random-tag");
@@ -45,8 +51,6 @@ function randomPost(value) {
 let idCate = null;
 
 SelectCate.addEventListener("change", (e) => {
-    console.log(e.target.value);
-
     if (e.target.value === "null") {
         alert("Bạn vui lòng chọn lựa chọn khác!");
         return;
@@ -114,8 +118,6 @@ ClickBtnRandom.addEventListener("click", function () {
         let hungTag = hasgtagRandom.map((item) => item?.attributes?.tag);
         Text += hungTag.join("  ");
     }
-
-    console.log(Content?.body?.split(" ").length);
 
     CountHastag.innerHTML = `Số tag: ${hasgtagRandom.length}`;
     CountWord.innerHTML = `Số từ: ${Content?.body?.split(" ").length}`;
