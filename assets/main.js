@@ -12,6 +12,7 @@ const TextAreaRender = document.querySelector("#text-render-wp");
 const CopyToClipboard = document.querySelector("#copy-to-bonhodem");
 const CountHastag = document.querySelector("#cout-hastag-wpp");
 const CountWord = document.querySelector("#cout-word");
+const LogoutBtn = document.querySelector("#logout-btn");
 
 fetch(
     "http://localhost:1337/api/categories?pagination[page]=1&pagination[pageSize]=10000000000000000000000000"
@@ -136,4 +137,9 @@ CopyToClipboard.addEventListener("click", function () {
 
     navigator.clipboard.writeText(TextAreaRender.value);
     alert("Đã copy vào clipboard");
+});
+
+LogoutBtn.addEventListener("click", () => {
+    localStorage.clear();
+    window.location.reload();
 });
